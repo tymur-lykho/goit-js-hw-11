@@ -4,10 +4,12 @@ import 'izitoast/dist/css/iziToast.min.css';
 import getPhotos from './js/pixabay-api';
 import renderContent from './js/render-functions';
 
-const form = document.querySelector('.search-form');
-const loader = document.querySelector('.js-loader');
+const form = document.querySelector('.form');
+const loader = document.querySelector('.loader');
 
 const gallery = document.querySelector('.gallery');
+
+loader.classList.add('hidden');
 
 iziToast.settings({
   position: 'topRight',
@@ -25,7 +27,8 @@ form.addEventListener('submit', event => {
   }
 
   gallery.innerHTML = '';
-  loader.classList.add('loader');
+  loader.classList.remove('hidden');
+  console.log(loader.classList);
 
   getPhotos(query)
     .then(data => {
@@ -39,7 +42,7 @@ form.addEventListener('submit', event => {
       });
     })
     .finally(() => {
-      loader.classList.remove('loader');
+      loader.classList.add('hidden');
       form.reset();
     });
 });
